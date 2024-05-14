@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab21 AJAX</title>
+</head>
+<body>
+    <input type="number" id="inputNumber">
+    <button onclick="square()">Знайти квадрат числа</button>
+    <p id="result"></p>
+
+    <script>
+        function square() {
+            const number = document.getElementById('inputNumber').value;
+            const xhr = new XMLHttpRequest();
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        document.getElementById('result').textContent = `Квадрат числа ${number} = ${response.result}`;
+                    } 
+                }
+            };
+            xhr.open('GET', `/square?number=${number}`, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
