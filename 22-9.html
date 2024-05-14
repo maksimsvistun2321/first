@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-9</title>
+</head>
+<body>
+    
+
+    <script>
+        function analyzeNumber(number) {
+            if (number > 0) {
+                console.log(`${number} - позитивне число`);
+            } else if (number < 0) {
+                console.log(`${number} - негативне число`);
+            } else {
+                console.log(`${number} - нуль`);
+            };
+
+            let isPrime = true;
+            if (number <= 1) {
+                isPrime = false;
+            } else {
+                for (let i = 2; i <= Math.sqrt(number); i++) {
+                    if (number % i === 0) {
+                        isPrime = false;
+                        break;
+                    };
+                };
+            };
+            if (isPrime) {
+                console.log(`${number} є простим числом.`);
+            } else {
+                console.log(`${number} не є простим числом.`);
+            };
+
+            let divisors = [2, 5, 3, 6, 9];
+            for (let j = 0; j < divisors.length; j++) {
+                if (number % divisors[j] === 0) {
+                    console.log(`${number} ділиться на ${divisors[j]} без залишку.`);
+                } else {
+                    console.log(`${number} не ділиться на ${divisors[j]} без залишку.`);
+                };
+            };
+        };    
+        
+        analyzeNumber(25);
+    </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-7</title>
+</head>
+<body>
+    
+
+    <script>
+        let array = [];
+        for (let i = 0; i < 5; i++) {
+            array[i] = [];
+            for (let j = 0; j < 5; j++) {
+                array[i][j] = Math.random() < 0.5 ? Math.floor(Math.random() * 100) * -1 : Math.floor(Math.random() * 100);
+            };
+        };
+
+        for (let i = 0; i < 5; i++) {
+            if (array[i][i] < 0) {
+                array[i][i] = 0;
+            } else {
+                array[i][i] = 1;
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            console.log(array[i].join("\t"));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-11</title>
+</head>
+<body>
+    
+
+    <script>
+        function removeDuplicates(arr) {
+            return arr.filter((value, index, self) => {
+                return self.indexOf(value) === index;
+            });
+        };
+
+        var inputArray = [1, 2, 2, 4, 5, 4, 7, 8, 7, 3, 6];
+        var resultArray = removeDuplicates(inputArray);
+        console.log(resultArray);
+    </script>
+</body>
+</html>

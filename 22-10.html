@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-10</title>
+</head>
+<body>
+    
+    <script>
+        function transformArray(arr) {
+            let reversedArray = arr.slice().reverse();
+            for (let i = 0; i < reversedArray.length; i++) {
+                if (typeof reversedArray[i] === 'number') { 
+                    reversedArray[i] = reversedArray[i] ** 2; 
+                }
+            }
+            return reversedArray;
+        }
+
+        let originalArray = [1, 2, 3, "q", "w", "e", 12];
+        let transformedArray = transformArray(originalArray);
+        console.log(transformedArray);
+
+    </script>
+</body>
+</html>

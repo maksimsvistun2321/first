@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22-6</title>
+</head>
+<body>
+    
+
+    <script>
+        function arrayOperations(N) {
+            let array = [];
+        
+            for (let i = 0; i < N; i++) {
+                array.push(Math.floor(Math.random() * 100));
+            };
+
+            let max = Math.max(...array);
+            let min = Math.min(...array);
+            let sum = array.reduce((a, b) => a + b, 0);
+            let average = sum / N;
+            let oddValues = array.filter(num => num % 2 !== 0);
+
+            console.log("Найбільше значення: " + max);
+            console.log("Найменше значення: " + min);
+            console.log("Загальна сума елементів: " + sum);
+            console.log("Середнє арифметичне елементів: " + average);
+            console.log("Непарні значення: " + oddValues.join(", "));
+        };
+
+        arrayOperations(10);
+    </script>
+</body>
+</html>
