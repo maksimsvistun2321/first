@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Моя гра</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div id="game-field">
+        <div id="timer">60 секунд</div>
+        <div class="play-zone">
+
+        </div>
+      </div>
+      <button id="restart-game">Почати з початку</button>
+      <table id="result-table">
+        <tr>
+          <th>Назва гри</th>
+          <th>Залишковий час</th>
+        </tr>
+        <tbody id="result-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    let numbers = [];
+    let currentNumber = 1;
+    let timer = 60;
+    let attempts = 0;
+    let bestResult = 60;
+    let interval;
+
+    $(document).ready(function() {
+
+      for (let i = 1; i <= 25; i++) {
+        numbers.push(i);
+      };
+  
+      numbers.sort(function () {
+        return 0.5 - Math.random();
+      });
+  
+      for (let j = 0; j < 25; j++) {
+        let randomNumber = numbers[j];
+        let $numberBlock = $("<div class='number_block'>" + randomNumber +"</div>");
+        
+        $numberBlock.css({
+          "font-size": (Math.floor(Math.random()*10) + 20) + "px",
+          "font-weight": "bolder",
+          "display": "flex",
+          "justify-content": "center",
+          "align-items": "center",
+          "color": "#" + Math.floor(Math.random()*16777215).toString(16),
+          "border": "1px solid black",
+          "border-radius": "4px"
+        });
+        $('.play-zone').append($numberBlock);
+      }; 
+
+      $('.number_block').click(function() {
+        let number = parseInt($(this).text());
+        if (number === currentNumber) {
+          $(this).addClass('selected');
+          currentNumber++;
+          if (currentNumber === 26) {
+            alert('Ви виграли!');
+            restartGame(true);
+          }
+        } else {
+          alert('Не вірна цифра');
+        }
+      });
+
+      $('#restart-game').on('click', function() {
+        restartGame(false);
+      });
+
+      interval = setInterval(function() {
+        timer--;
+        $('#timer').text(timer + ' секунд');
+        if (timer === 0) {
+          alert('Час вийшов!');
+          restartGame(false);
+        }
+      }, 1000);
+
+      function restartGame(gameWon) {
+        clearInterval(interval);
+        attempts++;
+        let timeTaken = timer;
+        $('#result-table-body').append('<tr><td>' + attempts + '</td><td>' + (gameWon ? timeTaken + ' секунд' : 'Час вийшов') + '</td></tr>');
+        
+        numbers = [];
+        currentNumber = 1;
+        timer = 60;
+        $('.number_block').removeClass('selected');
+        interval = setInterval(function() {
+          timer--;
+          $('#timer').text(timer + ' секунд');
+          if (timer === 0) {
+            alert('Час вийшов!');
+            restartGame(false);
+          }
+        }, 1000);
+      }
+    });
+  </script>
+</body>
+</html>
