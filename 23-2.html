@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23-2</title>
+</head>
+<body>
+    
+
+    <script>
+       class PowerPlant {
+            constructor(power) {
+                this.power = power; // в мегаватах
+            }
+
+            DayPower() {
+                return this.power;
+            }
+
+            NightPower() {
+                return this.power;
+            }
+        }
+
+        class SolarPanel {
+            constructor(dayPower) {
+                this.dayPower = dayPower; // в мегаватах
+            }
+
+            DayPower() {
+                return this.dayPower;
+            }
+
+            NightPower() {
+                return 0;
+            }
+        }
+
+        class ResidentialBuilding {
+            constructor(apartments) {
+                this.apartments = apartments;
+            }
+
+            DayConsumption() {
+                return this.apartments * 4 / 1000; // в мегаватах
+            }
+
+            NightConsumption() {
+                return this.apartments * 1 / 1000; // в мегаватах
+            }
+        }
+
+        class PowerLine {
+            constructor(capacity, price) {
+                this.capacity = capacity; // в мегаватах
+                this.price = price; // ціна за мегават
+            }
+        }
+
+        class PowerGrid {
+            constructor() {
+                this.powerPlants = [];
+                this.solarPanels = [];
+                this.residentialBuildings = [];
+                this.powerLines = [];
+            }
+
+            addPowerPlant(plant) {
+                this.powerPlants.push(plant);
+            }
+
+            addSolarPanel(panel) {
+            this.solarPanels.push(panel);
+            }
+
+            addResidentialBuilding(building) {
+                this.residentialBuildings.push(building);
+            }
+
+            addPowerLine(line) {
+                this.powerLines.push(line);
+            }
+
+            calculateBalanceAndCost() {
+                const dayProduction = this.powerPlants.reduce((sum, plant) => sum + plant.DayPower(), 0) + this.solarPanels.reduce((sum, panel) => sum + panel.DayPower(), 0);
+
+                const nightProduction = this.powerPlants.reduce((sum, plant) => sum + plant.NightPower(), 0);
+
+                const dayConsumption = this.residentialBuildings.reduce((sum, building) => sum + building.DayConsumption(), 0);
+
+                const nightConsumption = this.residentialBuildings.reduce((sum, building) => sum + building.NightConsumption(), 0);
+
+                const dayBalance = dayProduction - dayConsumption;
+                const nightBalance = nightProduction - nightConsumption;
+
+                let dayCost = 0;
+                let nightCost = 0;
+
+                if (dayBalance < 0) {
+                    const deficit = -dayBalance;
+                    const line = this.powerLines.find(line => line.capacity >= deficit);
+                    if (line) {
+                        dayCost = deficit * line.price;
+                    }
+                } else if (dayBalance > 0) {
+                    const surplus = dayBalance;
+                    const line = this.powerLines.find(line => line.capacity >= surplus);
+                    if (line) {
+                        dayCost = surplus * line.price;
+                    }
+                }
+
+                if (nightBalance < 0) {
+                    const deficit = -nightBalance;
+                    const line = this.powerLines.find(line => line.capacity >= deficit);
+                    if (line) {
+                        nightCost = deficit * line.price;
+                    }
+                } else if (nightBalance > 0) {
+                    const surplus = nightBalance;
+                    const line = this.powerLines.find(line => line.capacity >= surplus);
+                    if (line) {
+                        nightCost = surplus * line.price;
+                    }
+                }
+
+                return {dayBalance, nightBalance, dayCost, nightCost};
+            }
+        }
+
+        // Приклад:
+        const grid = new PowerGrid();
+        grid.addPowerPlant(new PowerPlant(10));
+        grid.addSolarPanel(new SolarPanel(5));
+        grid.addResidentialBuilding(new ResidentialBuilding(100));
+        grid.addPowerLine(new PowerLine(100, 50));
+
+        const result = grid.calculateBalanceAndCost();
+
+        console.log(`Денний баланс: ${result.dayBalance} МВт, Ціна: ${result.dayCost}`);
+        console.log(`Нічний  біланс: ${result.nightBalance} МВт, ціна: ${result.nightCost}`);
+    </script>
+</body>
+</html>

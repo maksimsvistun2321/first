@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23-1</title>
+</head>
+<body>
+    
+
+    <script>
+        const languages = {
+        ua: {days: ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"]},
+        en: {days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]}
+        };
+
+        function askQuestion(question) {
+        return prompt(question).toLowerCase();
+        };
+
+        function showDay() {
+        let languageInput = askQuestion("Виберіть мову 'ua' або 'en'?");
+  
+        while (!(languageInput === "ua" || languageInput === "en")) {
+            alert("Неправильне введення даних.");
+            languageInput = askQuestion("Виберіть мову 'ua' або 'en'?");
+        };
+  
+        let dayNumber = parseInt(askQuestion(languageInput === "ua" ? "Введіть номер дня тижня від 1 до 7?" : "Enter the day number of the week (from 1 to 7)?"));
+  
+        while (isNaN(dayNumber) || dayNumber < 1 || dayNumber > 7) {
+            alert("Неправильне введення даних.");
+            dayNumber = parseInt(askQuestion(languageInput === "ua" ? "Введіть номер дня тижня від 1 до 7?" : "Enter the day number of the week (from 1 to 7)?"));
+        };
+
+        alert(languages[languageInput].days[dayNumber - 1]);
+        };
+
+        showDay();
+    </script>
+</body>
+</html>
